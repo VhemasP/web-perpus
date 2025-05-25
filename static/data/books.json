@@ -1,0 +1,52 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "title": "To Kill a Mockingbird",
+            "author": "Harper Lee",
+            "year": 1960,
+            "created_at": "2025-05-25T10:00:00Z",
+            "updated_at": "2025-05-25T12:00:00Z"
+        },
+        {
+            "id": 2,
+            "title": "1984",
+            "author": "George Orwell",
+            "year": 1949,
+            "created_at": "2025-05-25T10:00:00Z",
+            "updated_at": "2025-05-25T10:00:00Z"
+        },
+        {
+            "id": 3,
+            "title": "Pride and Prejudice",
+            "author": "Jane Austen",
+            "year": 1813,
+            "created_at": "2025-05-25T10:00:00Z",
+            "updated_at": "2025-05-25T10:00:00Z"
+        },
+        {
+            "id": 4,
+            "title": "The Great Gatsby",
+            "author": "F. Scott Fitzgerald",
+            "year": 1925,
+            "created_at": "2025-05-25T10:00:00Z",
+            "updated_at": "2025-05-25T10:00:00Z"
+        },
+        {
+            "id": 5,
+            "title": "One Hundred Years of Solitude",
+            "author": "Gabriel Garc\u00c3\u00ada M\u00c3\u00a1rquez",
+            "year": 1967,
+            "created_at": "2025-05-25T10:00:00Z",
+            "updated_at": "2025-05-25T10:00:00Z"
+        },
+        {
+            "id": 6,
+            "title": "novel",
+            "author": "123",
+            "year": 123,
+            "created_at": "2025-05-25T12:00:00Z",
+            "updated_at": "2025-05-25T12:00:00Z"
+        }
+    ]
+}
