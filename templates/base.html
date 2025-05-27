@@ -8,6 +8,7 @@
     <title>{% block title %}BOOKSHELF{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{% static 'js/fireworks.js' %}"></script>
+    <script src="{% static 'js/fireworks.js' %}"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -385,7 +386,70 @@
                 sunday: 'Sunday',
                 closed: 'Closed',
                 brand: 'BOOKSHELF',
-                tagline: 'Discover endless possibilities through reading. Your gateway to knowledge and imagination.'
+                tagline: 'Discover endless possibilities through reading. Your gateway to knowledge and imagination.',
+                welcome: 'Welcome to the UNESA Digital Bookshelf!',
+                quote: 'The library is not a luxury, but one of the necessities of life',
+                searchPlaceholder: 'Search books by title, author, or year...',
+                available: 'Available',
+                borrowed: 'Borrowed',
+                by: 'by',
+                noBooksFound: 'No books found',
+                noMatchingBooks: 'No books matching',
+                backToHome: 'Back to Home',
+                noBooksAvailable: 'No books are available in the catalog.',
+                recentlyViewed: 'Recently Viewed',
+                clearSearch: 'Clear search',
+                searchResultsFor: 'Search results for',
+                booksFound: 'books found',
+
+                currentlyBorrowed: 'Currently Borrowed Books',
+                manageBooks: 'Manage all currently borrowed books and their status',
+                bookTitle: 'Book Title',
+                borrower: 'Borrower',
+                borrowDate: 'Borrow Date',
+                actions: 'Actions',
+                returnBook: 'Return Book',
+                return: 'Return',
+                noBorrowedBooks: 'No Books Currently Borrowed',
+                visitCatalog: 'There are no books currently checked out. Visit our catalog to find your next read!',
+                browseBooks: 'Browse Available Books',
+                // Detail page translations
+                detail: {
+                    by: 'by',
+                    borrowBookBtn: 'Borrow Book',
+                    returnBookBtn: 'Return Book',
+                    available: 'Available',
+                    currentlyBorrowed: 'Currently Borrowed',
+                    publicationYear: 'Publication Year',
+                    status: 'Status',
+                    borrowingHistory: 'Borrowing History',
+                    borrower: 'Borrower',
+                    borrowDate: 'Borrow Date',
+                    returnDate: 'Return Date',
+                    borrowed: 'Borrowed',
+                    returned: 'Returned'
+                },
+                // About page translations
+
+                pageTitle: 'About Us',
+                welcome2: 'Welcome to our Digital Library Catalog! We are dedicated to making knowledge accessible to everyone through our comprehensive collection of books.',
+                ourMission: 'Our Mission',
+                missionText: 'To provide a user-friendly platform for discovering and borrowing books, making literature and knowledge accessible to all.',
+                features: 'Features',
+
+                browse: 'Browse our extensive collection of books',
+                search: 'Search by title or author',
+                borrow: 'Easy book borrowing system',
+                track: 'Track your borrowing history',
+                integration: 'Integration with OpenLibrary for comprehensive book data',
+
+                contactUs: 'Contact Us',
+                contactIntro: 'If you have any questions or suggestions, please don\'t hesitate to contact us:',
+                email: 'Email: penapustaka@libra.com',
+                phone: 'Phone: (123) 456-7890',
+                address: 'Address: 123 Library Street, Booktown, BK 12345'
+
+
             },
             id: {
                 home: 'Beranda',
@@ -401,7 +465,70 @@
                 sunday: 'Minggu',
                 closed: 'Tutup',
                 brand: 'BOOKSHELF',
-                tagline: 'Temukan kemungkinan tanpa batas melalui membaca. Gerbang Anda menuju pengetahuan dan imajinasi.'
+                tagline: 'Temukan kemungkinan tanpa batas melalui membaca. Gerbang Anda menuju pengetahuan dan imajinasi.',
+                welcome: 'Selamat Datang di Rak Buku Digital UNESA!',
+                quote: 'Perpustakaan bukanlah kemewahan, melainkan salah satu kebutuhan hidup',
+                searchPlaceholder: 'Cari buku berdasarkan judul, penulis, atau tahun...',
+                available: 'Tersedia',
+                borrowed: 'Dipinjam',
+                by: 'oleh',
+                noBooksFound: 'bukunya ga ditemukan',
+                noMatchingBooks: 'ngga ada buku yang cocok sama',
+                backToHome: 'ngga jadi',
+                noBooksAvailable: 'Tidak ada buku yang tersedia king.',
+                recentlyViewed: 'Baru Dilihat',
+                clearSearch: 'Hapus pencarian',
+                searchResultsFor: 'Hasil pencarian untuk',
+                booksFound: 'buku ditemukan',
+
+                currentlyBorrowed: 'Buku yang Sedang Dipinjam',
+                manageBooks: 'Kelola semua buku yang sedang dipinjam dan statusnya',
+                bookTitle: 'Judul Buku',
+                borrower: 'Peminjam',
+                borrowDate: 'Tanggal Pinjam',
+                actions: 'Aksi',
+                returnBook: 'Kembalikan Buku',
+                return: 'Kembali',
+                noBorrowedBooks: 'Tidak Ada Buku yang Dipinjam',
+                visitCatalog: 'Tidak ada buku yang sedang dipinjam. Kunjungi katalog kami untuk menemukan bacaan Anda berikutnya!',
+                browseBooks: 'Jelajahi Buku yang Tersedia',
+                // Detail page translations
+                detail: {
+                    by: 'oleh',
+                    borrowBookBtn: 'Pinjam Buku',
+                    returnBookBtn: 'Kembalikan Buku',
+                    available: 'Tersedia',
+                    currentlyBorrowed: 'Sedang Dipinjam',
+                    publicationYear: 'Tahun Terbit',
+                    status: 'Status',
+                    borrowingHistory: 'Riwayat Peminjaman',
+                    borrower: 'Peminjam',
+                    borrowDate: 'Tanggal Pinjam',
+                    returnDate: 'Tanggal Kembali',
+                    borrowed: 'Dipinjam',
+                    returned: 'Dikembalikan'
+                },
+                // About page translations
+
+                pageTitle: 'Tentang Kami',
+                welcome2: 'Selamat datang di Katalog Perpustakaan Digital! Kami berdedikasi untuk menjadikan pengetahuan dapat diakses oleh semua orang melalui koleksi buku kami yang komprehensif.',
+                ourMission: 'Misi Kami',
+                missionText: 'Menyediakan platform yang mudah digunakan untuk menemukan dan meminjam buku, menjadikan literatur dan pengetahuan dapat diakses oleh semua.',
+                features: 'Fitur',
+
+                browse: 'Jelajahi koleksi buku kami yang luas',
+                search: 'Cari berdasarkan judul atau penulis',
+                borrow: 'Sistem peminjaman buku yang mudah',
+                track: 'Lacak riwayat peminjaman Anda',
+                integration: 'Integrasi dengan OpenLibrary untuk data buku yang komprehensif',
+                
+                contactUs: 'Hubungi Kami',
+                contactIntro: 'Jika Anda memiliki pertanyaan atau saran, jangan ragu untuk menghubungi kami:',
+                email: 'Email: penapustaka@libra.com',
+                phone: 'Telepon: (123) 456-7890',
+                address: 'Alamat: 123 Library Street, Booktown, BK 12345'
+
+
             }
         };
 

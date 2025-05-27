@@ -4,14 +4,13 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Header with stats -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center mb-4">
-            <svg class="w-8 h-8 mr-3 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center mb-4">            <svg class="w-8 h-8 mr-3 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                       d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
             </svg>
-            Currently Borrowed Books
+            <span data-translate="currentlyBorrowed">Currently Borrowed Books</span>
         </h1>
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-gray-600 dark:text-gray-400" data-translate="manageBooks">
             Manage all currently borrowed books and their status
         </p>
     </div>    {% if borrowings %}
@@ -19,12 +18,11 @@
     <div class="hidden md:block bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead class="bg-gray-50 dark:bg-gray-700">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Book Title</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Borrower</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Borrow Date</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                <thead class="bg-gray-50 dark:bg-gray-700">                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider" data-translate="bookTitle">Book Title</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider" data-translate="borrower">Borrower</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider" data-translate="borrowDate">Borrow Date</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider" data-translate="actions">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -56,12 +54,11 @@
                             <form action="{% url 'books:return' borrowing.book_id %}" method="post" class="inline">
                                 {% csrf_token %}
                                 <button type="submit"
-                                        class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-green-700 bg-green-100 hover:bg-green-200 dark:text-green-400 dark:bg-green-900 dark:hover:bg-green-800 transition-colors">
-                                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-green-700 bg-green-100 hover:bg-green-200 dark:text-green-400 dark:bg-green-900 dark:hover:bg-green-800 transition-colors">                                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                               d="M5 13l4 4L19 7"></path>
                                     </svg>
-                                    Return Book
+                                    <span data-translate="returnBook">Return Book</span>
                                 </button>
                             </form>
                         </td>
