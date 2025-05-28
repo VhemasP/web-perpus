@@ -93,41 +93,65 @@ def index(request):
     except Exception as e:
         messages.error(request, f"Error fetching books: {str(e)}")
         return render(request, 'books/index.html', {'books': [], 'recently_viewed': []})
-
 def book_detail(request, book_id):
     """Display details of a specific book"""
     try:
         book_id = clean_work_id(book_id)
-        response = requests.get(f"https://openlibrary.org/works/{book_id}.json")
-        response.raise_for_status()
-        book_data = response.json()
-        
+
+        # Ambil data works
+        work_response = requests.get(f"https://openlibrary.org/works/{book_id}.json")
+        work_response.raise_for_status()
+        work_data = work_response.json()
+
+        # Ambil data author
+        author_name = 'Unknown Author'
+        if 'authors' in work_data and work_data['authors']:
+            author_key = work_data['authors'][0].get('author', {}).get('key')
+            if author_key:
+                author_resp = requests.get(f"https://openlibrary.org{author_key}.json")
+                author_resp.raise_for_status()
+                author_data = author_resp.json()
+                author_name = author_data.get('name', 'Unknown Author')
+
+        # Ambil data editions (untuk year)
+        edition_response = requests.get(f"https://openlibrary.org/works/{book_id}/editions.json?limit=1&sort=first_publish_year")
+        edition_response.raise_for_status()
+        edition_data = edition_response.json()
+        first_publish_year = 0
+        if 'entries' in edition_data and edition_data['entries']:
+            first_publish_year = edition_data['entries'][0].get('first_publish_year', 0)
+
         book = Book(
             id=book_id,
-            title=book_data.get('title', 'Unknown Title'),
-            author=book_data.get('authors', [{'name': 'Unknown Author'}])[0].get('name', 'Unknown Author') if 'authors' in book_data else 'Unknown Author',
-            year=book_data.get('first_publish_date', '').split(',')[-1].strip() if 'first_publish_date' in book_data else 0,
-            cover_url=f"https://covers.openlibrary.org/b/id/{book_data.get('covers', [0])[0]}-L.jpg" if 'covers' in book_data and book_data['covers'] else None
+            title=work_data.get('title', 'Unknown Title'),
+            author=author_name,
+            year=first_publish_year,
+            cover_url=f"https://covers.openlibrary.org/b/id/{work_data.get('covers', [0])[0]}-L.jpg"
+                      if 'covers' in work_data and work_data['covers'] else None
         )
-        
-        # Check if book is currently borrowed
+
+        # Cek status ketersediaan
         book.is_available = not Borrowing.objects.filter(
             book_id=book_id,
             status='borrowed'
         ).exists()
-        
-        # Get borrowing history
+
+        # Riwayat peminjaman
         borrowing_history = Borrowing.objects.filter(book_id=book_id).order_by('-borrow_date')
-        
+
+        # Tambah ke recently viewed
         recently_viewed.add_book(book)
-        
+
         return render(request, 'books/detail.html', {
             'book': book,
             'borrowing_history': borrowing_history
         })
+
     except Exception as e:
         messages.error(request, f"Error fetching book details: {str(e)}")
         return redirect('books:index')
+
+
 
 def borrowed_books(request):
     """Display all currently borrowed books"""
