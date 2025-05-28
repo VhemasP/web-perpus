@@ -104,7 +104,8 @@
                         {{ book.title }}
                     </h3>
                     <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400"><span data-translate="by">by</span>
-                        <span class="italic">{{ book.author }}</span></p>
+                        <span class="italic">{{ book.author }}</span>
+                    </p>
                     <div class="mt-1 sm:mt-2 flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -178,8 +179,9 @@
                             class="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 truncate text-xs sm:text-sm">
                             {{ book.title }}
                         </h3>
-                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-1"><span data-translate="by">by</span> {{
-                            book.author }}</p>
+                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                            <span data-translate="by">by</span> {{ book.author }}
+                        </p>
                     </div>
                 </div>
             </a>

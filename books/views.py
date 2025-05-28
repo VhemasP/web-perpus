@@ -93,6 +93,7 @@ def index(request):
     except Exception as e:
         messages.error(request, f"Error fetching books: {str(e)}")
         return render(request, 'books/index.html', {'books': [], 'recently_viewed': []})
+    
 def book_detail(request, book_id):
     """Display details of a specific book"""
     try:
