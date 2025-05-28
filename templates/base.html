@@ -8,7 +8,7 @@
     <title>{% block title %}BOOKSHELF{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{% static 'js/fireworks.js' %}"></script>
-    
+
 
     <script>
         tailwind.config = {
@@ -44,13 +44,13 @@
 </head>
 
 <body class="bg-gray-50 dark:bg-gray-900">
-    <!-- Loading Spinner -->
+
     <div id="loading-spinner"
         class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50 hidden">
         <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-500"></div>
     </div>
 
-    <!-- Error/Message Alert -->
+
     {% if messages %}
     <div class="fixed top-20 right-4 z-50 space-y-4">
         {% for message in messages %}
@@ -65,7 +65,7 @@
         class="fixed top-0 z-40 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div class="px-3 py-3 lg:px-5">
             <div class="flex items-center justify-between relative">
-                <!-- Mobile Menu Button (Left) - Hidden on md and up -->
+
                 <button id="mobile-menu-button"
                     class="p-2 md:hidden text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,14 +73,14 @@
                             d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
-                <!-- Logo - Left aligned on md and up -->
+
                 <div class="flex-1 flex justify-center md:justify-start">
                     <a href="{% url 'books:index' %}" class="flex items-center">
                         <img src="{% static 'admin/img/logo.png' %}" alt="BOOKSHELF Logo" class="h-8 w-auto mr-2">
                         <span
                             class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">BOOKSHELF</span>
                     </a>
-                </div> <!-- Desktop Menu -->
+                </div>
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="{% url 'books:index' %}"
                         class="text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-500"
@@ -105,7 +105,7 @@
                     </form>
                 </div>
             </div>
-        </div> <!-- Mobile Menu (Slide from left) -->
+        </div>
         <div id="mobile-menu"
             class="fixed inset-y-0 left-0 transform -translate-x-full lg:hidden transition-transform duration-300 ease-in-out w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-50">
             <div class="h-full flex flex-col">
@@ -158,7 +158,7 @@
                 </div>
             </div>
         </div>
-        <!-- Overlay for mobile menu -->
+
         <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
     </nav>
     <div class="p-4 mt-16">
@@ -166,12 +166,12 @@
             {% block content %}
             {% endblock %}
         </div>
-    </div> <!-- Footer -->
+    </div>
     <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-8">
         <div class="max-w-7xl mx-auto pt-12 pb-8 px-4 sm:px-6 lg:px-8">
-            <!-- Grid section -->
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                <!-- Brand Section -->
+
                 <div class="col-span-1 lg:col-span-1">
                     <div class="flex items-center mb-4">
                         <img src="{% static 'admin/img/logo.png' %}" alt="BOOKSHELF Logo" class="h-8 w-auto mr-2">
@@ -182,7 +182,6 @@
                         Your gateway to knowledge and imagination.</p>
                 </div>
 
-                <!-- Quick Links -->
                 <div class="col-span-1">
                     <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
                         data-translate="quickLinks">Quick
@@ -208,7 +207,6 @@
                     </ul>
                 </div>
 
-                <!-- Contact Info -->
                 <div class="col-span-1">
                     <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
                         data-translate="contact">
@@ -222,7 +220,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            Jakarta, Indonesia
+                            Jawa Timur, Indonesia
                         </li>
                         <li class="flex items-center text-gray-600 dark:text-gray-400">
                             <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor"
@@ -243,7 +241,6 @@
                     </ul>
                 </div>
 
-                <!-- Opening Hours -->
                 <div class="col-span-1">
                     <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
                         data-translate="openingHours">
@@ -265,10 +262,9 @@
                 </div>
             </div>
 
-            <!-- Social Media & Copyright -->
             <div class="border-t border-gray-200 dark:border-gray-700 pt-8">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                    <!-- Social Media Icons -->
+
                     <div class="flex justify-center space-x-6 mb-4 md:mb-0">
                         <a href="#" class="text-gray-400 hover:text-primary-600 dark:hover:text-primary-500">
                             <span class="sr-only">Facebook</span>
@@ -294,7 +290,7 @@
                             </svg>
                         </a>
                     </div>
-                    <!-- Copyright -->
+
                     <div class="text-center text-gray-500 dark:text-gray-400">
                         <p>&copy; 2025 BOOKSHELF. All rights reserved.</p>
                     </div>
@@ -303,15 +299,13 @@
         </div>
     </footer>
 
-    <!-- Dark mode and Language toggle buttons -->
     <div class="fixed bottom-4 right-4 flex space-x-2">
-        <!-- Language toggle button -->
+
         <button id="language-toggle" type="button"
             class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
             <span id="language-text" class="font-medium">EN</span>
         </button>
 
-        <!-- Dark mode toggle button -->
         <button id="theme-toggle" type="button"
             class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
             <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -330,11 +324,10 @@
     {% block extra_js %}{% endblock %}
 
     <script>
-        // Dark mode toggle functionality
+
         const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
         const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
-        // Change the icons inside the button based on previous settings
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             themeToggleLightIcon.classList.remove('hidden');
             document.documentElement.classList.add('dark');
@@ -345,11 +338,10 @@
 
         const themeToggleBtn = document.getElementById('theme-toggle');
         themeToggleBtn.addEventListener('click', function () {
-            // Toggle icons
+
             themeToggleDarkIcon.classList.toggle('hidden');
             themeToggleLightIcon.classList.toggle('hidden');
 
-            // If is set in localStorage
             if (localStorage.getItem('color-theme')) {
                 if (localStorage.getItem('color-theme') === 'light') {
                     document.documentElement.classList.add('dark');
@@ -369,7 +361,6 @@
             }
         });
 
-        // Language toggle functionality
         const languageToggleBtn = document.getElementById('language-toggle');
         const languageText = document.getElementById('language-text');        // Language translations
         const translations = {
@@ -402,7 +393,6 @@
                 clearSearch: 'Clear search',
                 searchResultsFor: 'Search results for',
                 booksFound: 'books found',
-
                 currentlyBorrowed: 'Currently Borrowed Books',
                 manageBooks: 'Manage all currently borrowed books and their status',
                 bookTitle: 'Book Title',
@@ -414,41 +404,38 @@
                 noBorrowedBooks: 'No Books Currently Borrowed',
                 visitCatalog: 'There are no books currently checked out. Visit our catalog to find your next read!',
                 browseBooks: 'Browse Available Books',
-                // Detail page translations
-                detail: {
-                    by: 'by',
-                    borrowBookBtn: 'Borrow Book',
-                    returnBookBtn: 'Return Book',
-                    available: 'Available',
-                    currentlyBorrowed: 'Currently Borrowed',
-                    publicationYear: 'Publication Year',
-                    status: 'Status',
-                    borrowingHistory: 'Borrowing History',
-                    borrower: 'Borrower',
-                    borrowDate: 'Borrow Date',
-                    returnDate: 'Return Date',
-                    borrowed: 'Borrowed',
-                    returned: 'Returned'
-                },
-                // About page translations
 
+                // Detail page 
+                by: 'by',
+                borrowBookBtn: 'Borrow Book',
+                returnBookBtn: 'Return Book',
+                available: 'Available',
+                currentlyBorrowed: 'Currently Borrowed',
+                publicationYear: 'Publication Year',
+                status: 'Status',
+                borrowingHistory: 'Borrowing History',
+                borrower: 'Borrower',
+                borrowDate: 'Borrow Date',
+                returnDate: 'Return Date',
+                borrowed: 'Borrowed',
+                returned: 'Returned',
+
+                // About page 
                 pageTitle: 'About Us',
-                welcome2: 'Welcome to our Digital Library Catalog! We are dedicated to making knowledge accessible to everyone through our comprehensive collection of books.',
-                ourMission: 'Our Mission',
-                missionText: 'To provide a user-friendly platform for discovering and borrowing books, making literature and knowledge accessible to all.',
-                features: 'Features',
+                welcomeMessage: 'welcome to Bookshelf — a simple digital library project that we built as Major Assignment for Data Structure Course at Surabaya State University, UNESA 5 campus.',
+                ourTeam: '👨‍💻 Meet Our Team',
+                project: 'This project was developed by 5 students',
+                tujuan: '🎯 Project Objectives',
+                projectGoal: 'We want to apply the concepts of data structures to the development of real applications that can be used for book recording and lending, as well as book data exploration from OpenLibrary.',
+                feature: '🚀 Website feature',
+                1: 'Browse digital book collections',
+                2: 'Search for books by title or author',
+                3: 'Simple book lending system',
+                4: 'Tracking loan history',
+                5: 'Integration with OpenLibrary',
+                6: 'light & dark mode',
 
-                browse: 'Browse our extensive collection of books',
-                search: 'Search by title or author',
-                borrow: 'Easy book borrowing system',
-                track: 'Track your borrowing history',
-                integration: 'Integration with OpenLibrary for comprehensive book data',
 
-                contactUs: 'Contact Us',
-                contactIntro: 'If you have any questions or suggestions, please don\'t hesitate to contact us:',
-                email: 'Email: penapustaka@libra.com',
-                phone: 'Phone: (123) 456-7890',
-                address: 'Address: 123 Library Street, Booktown, BK 12345'
 
 
             },
@@ -481,7 +468,6 @@
                 clearSearch: 'Hapus pencarian',
                 searchResultsFor: 'Hasil pencarian untuk',
                 booksFound: 'buku ditemukan',
-
                 currentlyBorrowed: 'Buku yang Sedang Dipinjam',
                 manageBooks: 'Kelola semua buku yang sedang dipinjam dan statusnya',
                 bookTitle: 'Judul Buku',
@@ -493,52 +479,47 @@
                 noBorrowedBooks: 'Tidak Ada Buku yang Dipinjam',
                 visitCatalog: 'Tidak ada buku yang sedang dipinjam. Kunjungi katalog kami untuk menemukan bacaan Anda berikutnya!',
                 browseBooks: 'Jelajahi Buku yang Tersedia',
-                // Detail page translations
-                detail: {
-                    by: 'oleh',
-                    borrowBookBtn: 'Pinjam Buku',
-                    returnBookBtn: 'Kembalikan Buku',
-                    available: 'Tersedia',
-                    currentlyBorrowed: 'Sedang Dipinjam',
-                    publicationYear: 'Tahun Terbit',
-                    status: 'Status',
-                    borrowingHistory: 'Riwayat Peminjaman',
-                    borrower: 'Peminjam',
-                    borrowDate: 'Tanggal Pinjam',
-                    returnDate: 'Tanggal Kembali',
-                    borrowed: 'Dipinjam',
-                    returned: 'Dikembalikan'
-                },
-                // About page translations
 
+                // Detail page 
+                by: 'oleh',
+                borrowBookBtn: 'Pinjam Buku',
+                returnBookBtn: 'Kembalikan Buku',
+                available: 'Tersedia',
+                currentlyBorrowed: 'Sedang Dipinjam',
+                publicationYear: 'Tahun Terbit',
+                status: 'Status',
+                borrowingHistory: 'Riwayat Peminjaman',
+                borrower: 'Peminjam:',
+                borrowDate: 'Tanggal Pinjam',
+                returnDate: 'Tanggal Kembali',
+                borrowed: 'Dipinjam',
+                returned: 'Dikembalikan',
+
+                // About page
                 pageTitle: 'Tentang Kami',
-                welcome2: 'Selamat datang di Katalog Perpustakaan Digital! Kami berdedikasi untuk menjadikan pengetahuan dapat diakses oleh semua orang melalui koleksi buku kami yang komprehensif.',
-                ourMission: 'Misi Kami',
-                missionText: 'Menyediakan platform yang mudah digunakan untuk menemukan dan meminjam buku, menjadikan literatur dan pengetahuan dapat diakses oleh semua.',
-                features: 'Fitur',
-
-                browse: 'Jelajahi koleksi buku kami yang luas',
-                search: 'Cari berdasarkan judul atau penulis',
-                borrow: 'Sistem peminjaman buku yang mudah',
-                track: 'Lacak riwayat peminjaman Anda',
-                integration: 'Integrasi dengan OpenLibrary untuk data buku yang komprehensif',
-                
-                contactUs: 'Hubungi Kami',
-                contactIntro: 'Jika Anda memiliki pertanyaan atau saran, jangan ragu untuk menghubungi kami:',
-                email: 'Email: penapustaka@libra.com',
-                phone: 'Telepon: (123) 456-7890',
-                address: 'Alamat: 123 Library Street, Booktown, BK 12345'
+                welcomeMessage: 'Selamat datang di Bookshelf — sebuah proyek digital library sederhana yang kami bangun sebagai bagian dari Tugas Besar Mata Kuliah Struktur Data di Universitas Negeri Surabaya kampus UNESA 5.',
+                ourTeam: '👨‍💻 Kelompok 5 welll',
+                project: 'Proyek ini dikembangkan oleh 5 mahasiswa: ',
+                tujuan: '🎯 Tujuan Proyek',
+                projectGoal: 'Kami ingin menerapkan konsep struktur data pada pengembangan aplikasi nyata yang dapat digunakan untuk pencatatan dan peminjaman buku, serta eksplorasi data buku dari OpenLibrary.',
+                feature: '🚀 Fitur website',
+                1: 'Jelajahi koleksi buku digital',
+                2: 'Cari buku berdasarkan judul atau penulis',
+                3: 'Sistem peminjaman buku sederhana',
+                4: 'Melacak riwayat peminjaman',
+                5: 'Integrasi dengan OpenLibrary',
+                6: 'mode terang & gelap',
 
 
             }
         };
 
-        // Initialize language from localStorage or default to 'en'
+
         let currentLang = localStorage.getItem('language') || 'en';
         document.documentElement.lang = currentLang;
         languageText.textContent = currentLang.toUpperCase();        // Function to update text content
         function updateContent(lang) {
-            // Get all elements with data-translate attribute
+
             document.querySelectorAll('[data-translate]').forEach(el => {
                 const key = el.getAttribute('data-translate');
                 if (translations[lang][key]) {
@@ -546,7 +527,7 @@
                 }
             });
 
-            // Get all input elements with data-translate-placeholder attribute
+
             document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
                 const key = el.getAttribute('data-translate-placeholder');
                 if (translations[lang][key]) {
@@ -555,7 +536,7 @@
             });
         }
 
-        // Toggle language when button is clicked
+
         languageToggleBtn.addEventListener('click', () => {
             currentLang = currentLang === 'en' ? 'id' : 'en';
             localStorage.setItem('language', currentLang);
@@ -564,15 +545,15 @@
             updateContent(currentLang);
         });
 
-        // Function to show loading spinner
+
         function showLoading() {
             document.getElementById('loading-spinner').classList.remove('hidden');
         }
 
-        // Function to hide loading spinner
+
         function hideLoading() {
             document.getElementById('loading-spinner').classList.add('hidden');
-        }        // Mobile menu functionality
+        }
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const closeMobileMenuButton = document.getElementById('close-mobile-menu');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -596,20 +577,20 @@
             mobileMenuOverlay.addEventListener('click', closeMobileMenu);
         }
 
-        // Close mobile menu on window resize if it reaches desktop breakpoint
+
         window.addEventListener('resize', () => {
-            if (window.innerWidth >= 1024) { // lg breakpoint
+            if (window.innerWidth >= 1024) {
                 closeMobileMenu();
             }
         });
 
-        // Auto-hide messages after 5 seconds
+
         document.querySelectorAll('.alert-message').forEach(alert => {
             setTimeout(() => {
                 alert.style.opacity = '0';
                 setTimeout(() => alert.remove(), 500);
             }, 5000);
-        });        // Wait for DOM to be fully loaded before initializing translations
+        });
         document.addEventListener('DOMContentLoaded', () => {
             updateContent(currentLang);
         });

@@ -6,17 +6,15 @@ from requests.exceptions import RequestException, Timeout
 import logging
 from .models import Book, RecentlyViewedBooks, Borrowing
 
-# Initialize the recently viewed books stack
+# Inisialisasi tumpukan buku yang baru saja dilihat (stack)
 recently_viewed = RecentlyViewedBooks(max_size=5)
 
-# Configure logging
 logger = logging.getLogger(__name__)
 
 # OpenLibrary API base URL
 OPENLIBRARY_API_BASE = "https://openlibrary.org/search.json"
 
 def clean_work_id(work_id):
-    """Clean the work ID by removing the /works/ prefix if present"""
     return work_id.replace('/works/', '')
 
 def fetch_books(query="subject:fiction", limit=20):
@@ -76,10 +74,10 @@ def fetch_books(query="subject:fiction", limit=20):
         raise Exception("An unexpected error occurred. Please try again later.")
 
 def index(request):
-    """Display the list of books"""
+    """Menampilkan daftar buku"""
     try:
         books = fetch_books()
-        # Check availability status
+        # cek status ketersediaan
         for book in books:
             book.is_available = not Borrowing.objects.filter(
                 book_id=book.id,
@@ -95,7 +93,7 @@ def index(request):
         return render(request, 'books/index.html', {'books': [], 'recently_viewed': []})
     
 def book_detail(request, book_id):
-    """Display details of a specific book"""
+    """Menampilkan detail buku """
     try:
         book_id = clean_work_id(book_id)
 
@@ -155,7 +153,7 @@ def book_detail(request, book_id):
 
 
 def borrowed_books(request):
-    """Display all currently borrowed books"""
+    """Menampilkan semua buku yang dipinjam"""
     try:
         borrowed = Borrowing.objects.filter(status='borrowed').order_by('-borrow_date')
         return render(request, 'books/borrowed.html', {
@@ -166,11 +164,11 @@ def borrowed_books(request):
         return redirect('books:index')
 
 def about_us(request):
-    """Display the About Us page"""
+    """Menampilkan halaman about us"""
     return render(request, 'books/about.html')
 
 def borrow_book(request, book_id):
-    """Handle book borrowing"""
+    
     if request.method == 'POST':
         try:
             book_id = clean_work_id(book_id)
