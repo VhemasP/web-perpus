@@ -15,52 +15,20 @@ class BookGraph:
             self._build_relationships(book)
 
     def _build_relationships(self, book: Book) -> None:
-        """Build relationships for a book based on author, year, and subjects"""
-        # Get additional book data from OpenLibrary
+        """Build relationships for a book based on author only"""
         try:
-            work_response = requests.get(f"https://openlibrary.org/works/{book.id}.json")
-            work_data = work_response.json()
-            
-            # Get subjects
-            subjects = work_data.get('subjects', [])
-            
             # Find books with same author
             author_works_url = f"https://openlibrary.org/search.json?author={book.author}&limit=10"
             author_response = requests.get(author_works_url)
             author_books = author_response.json().get('docs', [])
             
-            # Add author relationships (weight: 0.6)
+            # Add author relationships (weight: 1.0)
             for related_book in author_books:
                 if related_book.get('key', '').startswith('/works/'):
                     related_id = related_book['key'].split('/')[-1]
                     if related_id != book.id:
-                        self.graph[book.id][related_id] += 0.6
-                        self.graph[related_id][book.id] += 0.6
-
-            # Add year-based relationships (weight: 0.3)
-            year_url = f"https://openlibrary.org/search.json?q=first_publish_year:{book.year}&limit=10"
-            year_response = requests.get(year_url)
-            year_books = year_response.json().get('docs', [])
-            
-            for related_book in year_books:
-                if related_book.get('key', '').startswith('/works/'):
-                    related_id = related_book['key'].split('/')[-1]
-                    if related_id != book.id:
-                        self.graph[book.id][related_id] += 0.3
-                        self.graph[related_id][book.id] += 0.3
-
-            # Add subject-based relationships (weight: 0.4)
-            for subject in subjects:
-                subject_url = f"https://openlibrary.org/search.json?subject={subject}&limit=5"
-                subject_response = requests.get(subject_url)
-                subject_books = subject_response.json().get('docs', [])
-                
-                for related_book in subject_books:
-                    if related_book.get('key', '').startswith('/works/'):
-                        related_id = related_book['key'].split('/')[-1]
-                        if related_id != book.id:
-                            self.graph[book.id][related_id] += 0.4
-                            self.graph[related_id][book.id] += 0.4
+                        self.graph[book.id][related_id] += 1.0
+                        self.graph[related_id][book.id] += 1.0
 
         except Exception as e:
             print(f"Error building relationships for book {book.id}: {str(e)}")
