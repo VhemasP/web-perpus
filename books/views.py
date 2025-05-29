@@ -10,6 +10,46 @@ from .recommendation import book_recommender
 # Inisialisasi tumpukan buku yang baru saja dilihat (stack)
 recently_viewed = RecentlyViewedBooks(max_size=5)
 
+class CategoryNode:
+    def __init__(self, name, category_id):
+        self.name = name
+        self.category_id = category_id
+        self.children = []
+        
+    def add_child(self, child):
+        self.children.append(child)
+        return child
+        
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'id': self.category_id,
+            'children': [child.to_dict() for child in self.children]
+        }
+
+# Build category tree
+def build_category_tree():
+    root = CategoryNode("All Categories", "all")
+    
+    # Fiction category
+    fiction = root.add_child(CategoryNode("Fiction", "fiction"))
+    fiction.add_child(CategoryNode("Romance", "romance"))
+    fiction.add_child(CategoryNode("Mystery", "mystery"))
+    fiction.add_child(CategoryNode("Science Fiction", "sci-fi"))
+    fiction.add_child(CategoryNode("Fantasy", "fantasy"))
+    
+    # Non-Fiction category
+    non_fiction = root.add_child(CategoryNode("Non-Fiction", "non-fiction"))
+    non_fiction.add_child(CategoryNode("Biography", "biography"))
+    non_fiction.add_child(CategoryNode("History", "history"))
+    non_fiction.add_child(CategoryNode("Science", "science"))
+    non_fiction.add_child(CategoryNode("Self-Help", "self-help"))
+    
+    return root
+
+# Initialize category tree
+CATEGORY_TREE = build_category_tree()
+
 logger = logging.getLogger(__name__)
 
 # OpenLibrary API base URL
@@ -77,8 +117,15 @@ def fetch_books(query="subject:fiction", limit=20):
 def index(request):
     """Menampilkan daftar buku"""
     try:
-        books = fetch_books()
-        # cek status ketersediaan
+        category = request.GET.get('category', 'all')
+        
+        # Modify query based on selected category
+        if category and category != 'all':
+            books = fetch_books(query=f"subject:{category}")
+        else:
+            books = fetch_books()
+            
+        # Check availability for each book
         for book in books:
             book.is_available = not Borrowing.objects.filter(
                 book_id=book.id,
@@ -87,11 +134,18 @@ def index(request):
             
         return render(request, 'books/index.html', {
             'books': books,
-            'recently_viewed': recently_viewed.get_books()
+            'recently_viewed': recently_viewed.get_books(),
+            'category_tree': CATEGORY_TREE.to_dict(),
+            'selected_category': category
         })
     except Exception as e:
         messages.error(request, f"Error fetching books: {str(e)}")
-        return render(request, 'books/index.html', {'books': [], 'recently_viewed': []})
+        return render(request, 'books/index.html', {
+            'books': [], 
+            'recently_viewed': [],
+            'category_tree': CATEGORY_TREE.to_dict(),
+            'selected_category': 'all'
+        })
     
 def book_detail(request, book_id):
     """Menampilkan detail buku """

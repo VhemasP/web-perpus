@@ -32,6 +32,16 @@
         </div>
     </div>
 
+    <!-- Category Tree -->
+    <div class="my-6 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Browse Categories</h3>
+        <div class="space-y-2">
+            {% with ''|center:0 as level %}
+            {% include 'books/category_tree_partial.html' with node=category_tree only %}
+            {% endwith %}
+        </div>
+    </div>
+
     {% if search_query %}
     <div class="mb-6 sm:mb-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
@@ -186,4 +196,44 @@
     </div>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle category tree interactions
+    const categoryToggles = document.querySelectorAll('.category-toggle');
+    categoryToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            // Only prevent default if clicking the button itself, not the link
+            if (e.target.tagName !== 'A') {
+                e.preventDefault();
+                const categoryId = this.dataset.categoryId;
+                const submenu = this.closest('.category-item').querySelector(`[data-parent="${categoryId}"]`);
+                const icon = this.querySelector('svg');
+                
+                if (submenu) {
+                    submenu.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-90');
+                }
+            }
+        });
+    });
+
+    // Find the current category and expand its parents
+    const selectedCategory = document.querySelector('.text-primary-600')?.closest('.category-item');
+    if (selectedCategory) {
+        let parent = selectedCategory.closest('[data-parent]');
+        while (parent) {
+            parent.classList.remove('hidden');
+            const parentButton = document.querySelector(`[data-category-id="${parent.dataset.parent}"]`);
+            if (parentButton) {
+                const icon = parentButton.querySelector('svg');
+                icon.classList.add('rotate-90');
+            }
+            parent = parent.closest('.category-item').querySelector('[data-parent]');
+        }
+    }
+});
+</script>
 {% endblock %}
