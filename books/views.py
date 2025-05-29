@@ -5,6 +5,7 @@ import requests
 from requests.exceptions import RequestException, Timeout
 import logging
 from .models import Book, RecentlyViewedBooks, Borrowing
+from .recommendation import book_recommender
 
 # Inisialisasi tumpukan buku yang baru saja dilihat (stack)
 recently_viewed = RecentlyViewedBooks(max_size=5)
@@ -116,6 +117,7 @@ def book_detail(request, book_id):
         edition_response = requests.get(f"https://openlibrary.org/works/{book_id}/editions.json?limit=1&sort=first_publish_year")
         edition_response.raise_for_status()
         edition_data = edition_response.json()
+        
         first_publish_year = 0
         if 'entries' in edition_data and edition_data['entries']:
             first_publish_year = edition_data['entries'][0].get('first_publish_year', 0)
@@ -128,6 +130,10 @@ def book_detail(request, book_id):
             cover_url=f"https://covers.openlibrary.org/b/id/{work_data.get('covers', [0])[0]}-L.jpg"
                       if 'covers' in work_data and work_data['covers'] else None
         )
+
+        # Add book to recommender and get recommendations
+        book_recommender.add_book(book)
+        recommendations = book_recommender.get_recommendations(book_id)
 
         # Cek status ketersediaan
         book.is_available = not Borrowing.objects.filter(
@@ -143,9 +149,9 @@ def book_detail(request, book_id):
 
         return render(request, 'books/detail.html', {
             'book': book,
-            'borrowing_history': borrowing_history
+            'borrowing_history': borrowing_history,
+            'recommendations': recommendations
         })
-
     except Exception as e:
         messages.error(request, f"Error fetching book details: {str(e)}")
         return redirect('books:index')
