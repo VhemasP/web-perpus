@@ -27,7 +27,7 @@ class CategoryNode:
             'children': [child.to_dict() for child in self.children]
         }
 
-# Build category tree
+# ini gunain tree
 def build_category_tree():
     root = CategoryNode("All Categories", "all")
     
@@ -74,7 +74,7 @@ def fetch_books(query="subject:fiction", limit=20, offset=0):
             'limit': limit,
             'offset': offset,
             'fields': 'key,title,author_name,first_publish_year,cover_i',
-            'sort': 'rating'  # Sort by rating to get more interesting books first
+            'sort': 'rating'  
         }
         
         response = requests.get(
@@ -124,16 +124,15 @@ def index(request):
         page = int(request.GET.get('page', 1))
         books_per_page = 20
         
-        # Modify query based on selected category
         if category and category != 'all':
             query = f"subject:{category}"
         else:
             query = "subject:*"  # All books
             
-        # Calculate offset for the API
+        # Hitung offset untuk API
         offset = (page - 1) * books_per_page
             
-        # Fetch only the current page
+        # Ambil hanya halaman saat ini
         response = requests.get(
             OPENLIBRARY_API_BASE,
             params={
@@ -169,7 +168,6 @@ def index(request):
         total_results = data.get('numFound', 0)
         shown_results = offset + len(books)
             
-        # For HTMX/AJAX requests, return only the book items
         if request.headers.get('HX-Request'):
             return render(request, 'books/book_items.html', {
                 'books': books,
@@ -236,11 +234,11 @@ def book_detail(request, book_id):
             year=first_publish_year,
             cover_url=f"https://covers.openlibrary.org/b/id/{work_data.get('covers', [0])[0]}-L.jpg"
                       if 'covers' in work_data and work_data['covers'] else None
-        )        # Add book to recommender and get recommendations
+        )        # Tambahkan buku ke rekomendasi dan dapatkan rekomendasi
         book_recommender.add_book(book)
         raw_recommendations = book_recommender.get_recommendations(book_id)
         
-        # Fetch year information for recommended books
+      # Ambil informasi tahun untuk buku yang direkomendasikan
         recommendations = []
         for rec_book, similarity in raw_recommendations:
             # Ambil data works untuk recommended book

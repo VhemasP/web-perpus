@@ -3,6 +3,7 @@ import requests
 from typing import Dict, List, Set, Tuple
 from .models import Book
 
+# yang ini gunain graph untuk rekomendasi buku
 class BookGraph:
     def __init__(self):
         self.graph: Dict[str, Dict[str, float]] = defaultdict(lambda: defaultdict(float))

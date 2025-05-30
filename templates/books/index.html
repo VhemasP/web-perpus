@@ -32,7 +32,6 @@
         </div>
     </div>
 
-    <!-- Category Selector -->
     <div class="my-4 sm:my-6 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6">
         <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 text-center">
             <svg class="w-5 h-5 sm:w-6 sm:h-6 inline-block mr-2 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -268,7 +267,6 @@
         {% endfor %}
     </div>    
 
-    <!-- Load More Section -->
     {% if has_more %}
     <div id="loadMoreInfo" class="text-center mt-4 text-sm text-gray-600 dark:text-gray-400">
         {% if total_results > 0 %}
@@ -313,10 +311,7 @@
                     </div>
                     {% endif %}
                     <div class="flex-1 min-w-0">
-                        <h3
-                            class="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 truncate text-xs sm:text-sm">
-                            {{ book.title }}
-                        </h3>
+                        <h3 class="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 truncate text-xs sm:text-sm">{{ book.title }}</h3>
                         <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">
                             <span data-translate="by">by</span> {{ book.author }}
                         </p>
@@ -337,7 +332,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const loadingSpinner = document.getElementById('loadingSpinner');
     const loadMoreText = document.getElementById('loadMoreText');
     const loadingText = document.getElementById('loadingText');
-    // Menggunakan selector yang lebih spesifik untuk grid buku utama
     const bookGrid = document.querySelector('.grid.grid-cols-2.xs\\:grid-cols-2.sm\\:grid-cols-3.md\\:grid-cols-4.xl\\:grid-cols-5');
     const loadMoreContainer = document.getElementById('loadMoreContainer');
     const loadMoreInfo = document.getElementById('loadMoreInfo');
@@ -370,15 +364,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const html = await response.text();
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-            
-            // Menggunakan selector yang sama dengan grid buku utama
+
             const tempGrid = doc.querySelector('.grid.grid-cols-2.xs\\:grid-cols-2.sm\\:grid-cols-3.md\\:grid-cols-4.xl\\:grid-cols-5');
             if (!tempGrid) {
                 loadMoreContainer.style.display = 'none';
                 return;
             }
 
-            // Mengambil hanya elemen buku (tidak termasuk pesan "no books found")
             const newBooks = Array.from(tempGrid.children).filter(book => 
                 book.classList.contains('group') && 
                 !book.classList.contains('col-span-full')
@@ -389,10 +381,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Menambahkan buku baru ke grid
             newBooks.forEach(book => {
                 const clone = book.cloneNode(true);
-                // Memastikan semua event listener dan fungsi bekerja dengan benar
                 const links = clone.querySelectorAll('a');
                 links.forEach(link => {
                     if (link.href.includes('books:detail')) {
@@ -403,13 +393,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 bookGrid.appendChild(clone);
             });
 
-            // Update pagination info
             const newInfo = doc.getElementById('loadMoreInfo');
             if (newInfo && loadMoreInfo) {
                 loadMoreInfo.innerHTML = newInfo.innerHTML;
             }
 
-            // Check if there are more pages
             const newContainer = doc.getElementById('loadMoreContainer');
             if (!newContainer) {
                 loadMoreContainer.style.display = 'none';

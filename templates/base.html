@@ -363,7 +363,7 @@
         });
 
         const languageToggleBtn = document.getElementById('language-toggle');
-        const languageText = document.getElementById('language-text');        // Language translations
+        const languageText = document.getElementById('language-text');      
         const translations = {
             en: {
                 home: 'Home',
@@ -553,7 +553,7 @@
 
         let currentLang = localStorage.getItem('language') || 'en';
         document.documentElement.lang = currentLang;
-        languageText.textContent = currentLang.toUpperCase();        // Function to update text content
+        languageText.textContent = currentLang.toUpperCase();      
         function updateContent(lang) {
 
             document.querySelectorAll('[data-translate]').forEach(el => {
@@ -632,7 +632,7 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-    // Handle category tree interactions
+
     const categoryToggles = document.querySelectorAll('.category-toggle');
     categoryToggles.forEach(toggle => {
         toggle.addEventListener('click', function(e) {
