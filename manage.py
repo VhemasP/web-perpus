@@ -1,5 +1,15 @@
 #!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
+"""
+Ini file manage.py, buat ngejalanin command Django!
+
+Yang bisa dilakuin:
+- python manage.py runserver -> Jalanin development server
+- python manage.py migrate -> Update database
+- python manage.py createsuperuser -> Bikin admin account
+- python manage.py shell -> Buka Python shell + Django context
+
+"""
+
 import os
 import sys
 

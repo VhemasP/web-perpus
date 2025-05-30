@@ -1,3 +1,17 @@
+"""
+Ini nih mapping URL ke views!
+Jadi kalo user akses URL tertentu, bakal di-handle sama function yang sesuai.
+
+Routes yang ada:
+1. / -> Homepage, nampilin daftar buku
+2. /about/ -> About page kita
+3. /borrowed/ -> List buku yang dipinjam
+4. /book/<id>/ -> Detail buku
+5. /book/<id>/borrow/ -> Minjem buku
+6. /book/<id>/return/ -> Balikin buku
+7. /search/ -> Nyari buku
+"""
+
 from django.urls import path
 from . import views
 

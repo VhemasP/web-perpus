@@ -7,38 +7,59 @@ import logging
 from .models import Book, RecentlyViewedBooks, Borrowing
 from .recommendation import book_recommender
 
-# Inisialisasi tumpukan buku yang baru saja dilihat (stack)
+# Inisialisasi stack buat recently viewed books (max 5 buku)
 recently_viewed = RecentlyViewedBooks(max_size=5)
 
 class CategoryNode:
+    """
+    Ini pake struktur data TREE buat bikin kategori buku.
+    - Root node = kategori utama (All Categories)
+    - Child nodes = sub-kategori (Fiction, Non-Fiction, dll)
+    - Leaf nodes = kategori spesifik (Romance, Mystery, dll)
+    """
     def __init__(self, name, category_id):
         self.name = name
         self.category_id = category_id
-        self.children = []
+        self.children = []  # List buat nyimpen child nodes
         
     def add_child(self, child):
         self.children.append(child)
         return child
         
     def to_dict(self):
+        # Recursive function buat ubah tree ke dictionary
         return {
             'name': self.name,
             'id': self.category_id,
             'children': [child.to_dict() for child in self.children]
         }
 
-# ini gunain tree
 def build_category_tree():
+    """
+    Ini fungsi buat bikin tree kategori!
+    Tree-nya gini:
+    All Categories
+    ├── Fiction
+    │   ├── Romance
+    │   ├── Mystery
+    │   ├── Sci-Fi
+    │   └── Fantasy
+    └── Non-Fiction
+        ├── Biography
+        ├── History
+        ├── Science
+        └── Self-Help
+    """
     root = CategoryNode("All Categories", "all")
     
-    # Fiction category
+    # Bikin branch Fiction
     fiction = root.add_child(CategoryNode("Fiction", "fiction"))
     fiction.add_child(CategoryNode("Romance", "romance"))
     fiction.add_child(CategoryNode("Mystery", "mystery"))
     fiction.add_child(CategoryNode("Science Fiction", "sci-fi"))
     fiction.add_child(CategoryNode("Fantasy", "fantasy"))
     
-    # Non-Fiction category
+    # Bikin branch Non-Fiction
     non_fiction = root.add_child(CategoryNode("Non-Fiction", "non-fiction"))
     non_fiction.add_child(CategoryNode("Biography", "biography"))
     non_fiction.add_child(CategoryNode("History", "history"))
@@ -47,7 +68,7 @@ def build_category_tree():
     
     return root
 
-# Initialize category tree
+# Initialize category tree sekali aja pas startup
 CATEGORY_TREE = build_category_tree()
 
 logger = logging.getLogger(__name__)
@@ -56,17 +77,15 @@ logger = logging.getLogger(__name__)
 OPENLIBRARY_API_BASE = "https://openlibrary.org/search.json"
 
 def clean_work_id(work_id):
+    """Bersihin ID buku dari format /works/"""
     return work_id.replace('/works/', '')
 
 def fetch_books(query="subject:fiction", limit=20, offset=0):
     """
-    Fetch books from OpenLibrary API
-    Args:
-        query (str): Search query for books
-        limit (int): Number of books per page
-        offset (int): Number of books to skip
-    Returns:
-        list: List of Book objects
+    Ambil data buku dari API OpenLibrary
+    - Query: bisa by judul/author/subject
+    - Limit: mau ambil berapa buku
+    - Offset: mulai dari index berapa (buat pagination)
     """
     try:
         params = {
