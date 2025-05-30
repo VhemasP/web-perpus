@@ -118,19 +118,30 @@ def index(request):
     """Menampilkan daftar buku"""
     try:
         category = request.GET.get('category', 'all')
+        page = int(request.GET.get('page', 1))
+        books_per_page = 20
         
         # Modify query based on selected category
         if category and category != 'all':
-            books = fetch_books(query=f"subject:{category}")
+            all_books = fetch_books(query=f"subject:{category}", limit=books_per_page * page)
         else:
-            books = fetch_books()
+            all_books = fetch_books(limit=books_per_page * page)
             
         # Check availability for each book
-        for book in books:
+        for book in all_books:
             book.is_available = not Borrowing.objects.filter(
                 book_id=book.id,
                 status='borrowed'
             ).exists()
+        
+        # Calculate start and end indices for the current page
+        start_idx = (page - 1) * books_per_page
+        end_idx = start_idx + books_per_page
+        books = all_books[start_idx:end_idx]
+            
+        if request.headers.get('HX-Request'):
+            # If it's an AJAX request, return only the book items
+            return render(request, 'books/book_items.html', {'books': books})
             
         return render(request, 'books/index.html', {
             'books': books,
