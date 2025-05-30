@@ -41,8 +41,13 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400"
-                                    data-translate="publicationYear">Publication Year</h3>
-                                <p class="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{{ book.year }}</p>
+                                    data-translate="publicationYear">Publication Year</h3>                                <p class="mt-1 text-lg font-semibold text-gray-900 dark:text-white">
+                                    {% if book.year and book.year != 0 %}
+                                        {{ book.year }}
+                                    {% else %}
+                                        <span class="t  ext-gray-400" data-translate="notAvailable">Not available</span>
+                                    {% endif %}
+                                </p>
                             </div>
                             <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400"
@@ -72,9 +77,14 @@
                                     {% endif %}
                                     <h3 class="font-semibold text-gray-900 dark:text-white mb-1 line-clamp-2">{{book.title }}</h3>
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-1"><span
-                                            data-translate="by">by</span> {{ book.author }}</p>
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="text-gray-500 dark:text-gray-400">{{ book.year }}</span>
+                                            data-translate="by">by</span> {{ book.author }}</p>                            <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-500 dark:text-gray-400">
+                                            {% if book.year and book.year != 0 %}
+                                                {{ book.year }}
+                                            {% else %}
+                                                <span data-translate="notAvailable">N/A</span>
+                                            {% endif %}
+                                        </span>
                                         <div class="flex items-center">
                                             <span class="text-gray-500 dark:text-gray-400 mr-1"
                                                 data-translate="match">Author Match:</span>

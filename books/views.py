@@ -222,10 +222,12 @@ def book_detail(request, book_id):
         edition_response = requests.get(f"https://openlibrary.org/works/{book_id}/editions.json?limit=1&sort=first_publish_year")
         edition_response.raise_for_status()
         edition_data = edition_response.json()
-        
-        first_publish_year = 0
-        if 'entries' in edition_data and edition_data['entries']:
+        first_publish_year = work_data.get('first_publish_year', 0)
+        if not first_publish_year and 'entries' in edition_data and edition_data['entries']:
             first_publish_year = edition_data['entries'][0].get('first_publish_year', 0)
+        if not first_publish_year:
+            first_publish_year = work_data.get('created', {}).get('value', '').split('-')[0]
+            first_publish_year = int(first_publish_year) if first_publish_year.isdigit() else 0
 
         book = Book(
             id=book_id,
@@ -234,11 +236,23 @@ def book_detail(request, book_id):
             year=first_publish_year,
             cover_url=f"https://covers.openlibrary.org/b/id/{work_data.get('covers', [0])[0]}-L.jpg"
                       if 'covers' in work_data and work_data['covers'] else None
-        )
-
-        # Add book to recommender and get recommendations
+        )        # Add book to recommender and get recommendations
         book_recommender.add_book(book)
-        recommendations = book_recommender.get_recommendations(book_id)
+        raw_recommendations = book_recommender.get_recommendations(book_id)
+        
+        # Fetch year information for recommended books
+        recommendations = []
+        for rec_book, similarity in raw_recommendations:
+            # Ambil data works untuk recommended book
+            rec_work_response = requests.get(f"https://openlibrary.org/works/{rec_book.id}.json")
+            if rec_work_response.ok:
+                rec_work_data = rec_work_response.json()
+                rec_year = rec_work_data.get('first_publish_year', 0)
+                if not rec_year:
+                    rec_year = rec_work_data.get('created', {}).get('value', '').split('-')[0]
+                    rec_year = int(rec_year) if rec_year.isdigit() else 0
+                rec_book.year = rec_year
+            recommendations.append((rec_book, similarity))
 
         # Cek status ketersediaan
         book.is_available = not Borrowing.objects.filter(
