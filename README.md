@@ -6,15 +6,13 @@
 
 
 <div align='center'>
-  <a  href="https://git.io/typing-svg">
-<img src="https://readme-typing-svg.herokuapp.com?font=Fredoka&weight=100&size=40&pause=1000&color=F727D5&center=true&vCenter=true&width=435&height=60&lines=Welcome+to+PetOpia!" alt="Typing SVG" />
-</a>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=500&size=30&pause=1000&width=435&lines=Welcome+to+BookShelf!!!" alt="Typing SVG" /></a>
 </div>
 
-<p align='center'>
+<p align='center'>  Selamat datang di
 <strong>
-  PetOpia
-</strong> adalah website toko hewan peliharaan modern dengan tampilan <a href='https://www.nngroup.com/articles/neobrutalism/'>neo-brutalism</a> yang interaktif dan penuh warna. Website ini memungkinkan pengguna untuk menjelajahi, memilih, dan membeli hewan peliharaan dengan mudah secara online.
+   Bookshelf 
+</strong>— sebuah proyek digital library sederhana yang kami bangun sebagai bagian dari Tugas Besar Mata Kuliah Struktur Data di Universitas Negeri Surabaya kampus UNESA 5.',
 </p>
 
 <p align='center'>
