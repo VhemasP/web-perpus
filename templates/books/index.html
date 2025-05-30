@@ -32,123 +32,126 @@
         </div>
     </div>
 
-    <!-- Category Selector -->    <div class="my-6 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 text-center">
-            <svg class="w-6 h-6 inline-block mr-2 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <!-- Category Selector -->
+    <div class="my-4 sm:my-6 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6">
+        <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 text-center">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 inline-block mr-2 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                     d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
                 </path>
-            </svg>
-            {% if selected_category == 'fiction' %}
-                All Fiction Books
+            </svg>            {% if selected_category == 'fiction' %}
+                <span data-translate="fictionBooks">All Fiction Books</span>
             {% elif selected_category == 'non-fiction' %}
-                All Nonfiction Books
+                <span data-translate="nonfictionBooks">All Nonfiction Books</span>
             {% elif selected_category == 'romance' %}
-                Romance Books
+                <span data-translate="romanceBooks">Romance Books</span>
             {% elif selected_category == 'mystery' %}
-                Mystery Books
+                <span data-translate="mysteryBooks">Mystery Books</span>
             {% elif selected_category == 'sci-fi' %}
-                Science Fiction Books
+                <span data-translate="scifiBooks">Science Fiction Books</span>
             {% elif selected_category == 'fantasy' %}
-                Fantasy Books
+                <span data-translate="fantasyBooks">Fantasy Books</span>
             {% elif selected_category == 'biography' %}
-                Biography Books
+                <span data-translate="biographyBooks">Biography Books</span>
             {% elif selected_category == 'history' %}
-                History Books
+                <span data-translate="historyBooks">History Books</span>
             {% elif selected_category == 'science' %}
-                Science Books
+                <span data-translate="scienceBooks">Science Books</span>
             {% elif selected_category == 'self-help' %}
-                Self-Help Books
+                <span data-translate="selfHelpBooks">Self-Help Books</span>
             {% else %}
-                Browse Categories
+                <span data-translate="browseCategories">Browse Categories</span>
             {% endif %}
         </h3>
         {% if selected_category %}
-        <p class="text-sm text-gray-600 dark:text-gray-400 text-center mb-4">{{ books|length }} books found in this category</p>
+        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 text-center mb-3 sm:mb-4">{{ books|length }} books found in this category</p>
         {% endif %}
-        <div class="flex flex-wrap gap-4 justify-center">
+        
+        <!-- Main Categories -->
+        <div class="grid grid-cols-1 sm:flex sm:flex-wrap gap-2 sm:gap-4 justify-center mb-4">
             <a href="{% url 'books:index' %}?category=all" 
-               class="flex items-center px-6 py-3 rounded-lg font-medium text-sm transition-colors {% if selected_category == 'all' or not selected_category %}bg-primary-600 text-white hover:bg-primary-700{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600{% endif %}">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               class="flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium text-sm transition-colors {% if selected_category == 'all' or not selected_category %}bg-primary-600 text-white hover:bg-primary-700{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600{% endif %}">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                         d="M4 6h16M4 10h16M4 14h16M4 18h16">
                     </path>
                 </svg>
-                All Categories
+                <span data-translate="allCategories">All Categories</span>
             </a>
             <a href="{% url 'books:index' %}?category=fiction" 
-               class="flex items-center px-6 py-3 rounded-lg font-medium text-sm transition-colors {% if selected_category == 'fiction' %}bg-primary-600 text-white hover:bg-primary-700{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600{% endif %}">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               class="flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium text-sm transition-colors {% if selected_category == 'fiction' %}bg-primary-600 text-white hover:bg-primary-700{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600{% endif %}">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                         d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
                     </path>
                 </svg>
-                Fiction
+                <span data-translate="fiction">Fiction</span>
             </a>
             <a href="{% url 'books:index' %}?category=non-fiction" 
-               class="flex items-center px-6 py-3 rounded-lg font-medium text-sm transition-colors {% if selected_category == 'non-fiction' %}bg-primary-600 text-white hover:bg-primary-700{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600{% endif %}">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               class="flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium text-sm transition-colors {% if selected_category == 'non-fiction' %}bg-primary-600 text-white hover:bg-primary-700{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600{% endif %}">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                         d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
                     </path>
                 </svg>
-                Nonfiction
+                <span data-translate="nonfiction">Nonfiction</span>
             </a>
         </div>
         
-        <!-- Sub-categories with icons -->
+        <!-- Sub-categories with icons - Mobile Optimized -->
         {% if selected_category == 'fiction' %}
-        <div class="mt-6 flex flex-wrap gap-3 justify-center">
-            <a href="{% url 'books:index' %}?category=romance" class="flex items-center px-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
-                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3 justify-center">
+            <a href="{% url 'books:index' %}?category=romance" 
+               class="flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg sm:rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                 </svg>
-                Romance
+                <span data-translate="romance">Romance</span>
             </a>
-            <a href="{% url 'books:index' %}?category=mystery" class="flex items-center px-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
-                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{% url 'books:index' %}?category=mystery" class="flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg sm:rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
-                Mystery
+                <span data-translate="mystery">Mystery</span>
             </a>
-            <a href="{% url 'books:index' %}?category=sci-fi" class="flex items-center px-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
-                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{% url 'books:index' %}?category=sci-fi" class="flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg sm:rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                 </svg>
-                Science Fiction
+                <span data-translate="scifi">Science Fiction</span>
             </a>
-            <a href="{% url 'books:index' %}?category=fantasy" class="flex items-center px-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
-                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{% url 'books:index' %}?category=fantasy" class="flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg sm:rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
                 </svg>
-                Fantasy
+                <span data-translate="fantasy">Fantasy</span>
             </a>
         </div>
         {% elif selected_category == 'non-fiction' %}
-        <div class="mt-6 flex flex-wrap gap-3 justify-center">
-            <a href="{% url 'books:index' %}?category=biography" class="flex items-center px-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
-                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3 justify-center">
+            <a href="{% url 'books:index' %}?category=biography" class="flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg sm:rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                 </svg>
-                Biography
+                <span data-translate="biography">Biography</span>
             </a>
-            <a href="{% url 'books:index' %}?category=history" class="flex items-center px-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
-                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{% url 'books:index' %}?category=history" class="flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg sm:rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                History
+                <span data-translate="history">History</span>
             </a>
-            <a href="{% url 'books:index' %}?category=science" class="flex items-center px-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
-                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{% url 'books:index' %}?category=science" class="flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg sm:rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
                 </svg>
-                Science
+                <span data-translate="science">Science</span>
             </a>
-            <a href="{% url 'books:index' %}?category=self-help" class="flex items-center px-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
-                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{% url 'books:index' %}?category=self-help" class="flex items-center justify-center px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-lg sm:rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                 </svg>
-                Self-Help
+                <span data-translate="selfHelp">Self-Help</span>
             </a>
         </div>
         {% endif %}
@@ -265,26 +268,17 @@
             </div>
         </div>
         {% endfor %}
-    </div>
-
-    <!-- Load More Button -->
-    {% if books|length >= 20 %}
-    <div class="mt-8 text-center">
-        <button id="loadMoreBtn" 
-                class="inline-flex items-center px-6 py-3 bg-white text-primary-700 font-semibold rounded-lg border-2 border-primary-600 hover:bg-primary-50 transition-colors text-sm sm:text-base shadow-sm">
-            <svg class="w-5 h-5 mr-2 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+    </div>    <!-- Load More Button -->
+    <div id="loadMoreContainer" class="text-center mt-8 mb-4">
+        <button id="loadMoreBtn" class="inline-flex items-center px-6 py-3 bg-white dark:bg-gray-800 text-primary-600 dark:text-primary-400 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <svg id="loadingSpinner" class="w-5 h-5 mr-2 animate-spin hidden" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            Load More Books
-            <span id="loadingSpinner" class="hidden ml-2">
-                <svg class="animate-spin h-5 w-5 text-primary-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-            </span>
+            <span id="loadMoreText" data-translate="loadMore">Load More</span>
+            <span id="loadingText" class="hidden" data-translate="loading">Loading...</span>
         </button>
     </div>
-    {% endif %}
 
     {% if recently_viewed %}
     <div class="mt-12 sm:mt-16">
