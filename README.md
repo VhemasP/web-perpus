@@ -38,19 +38,23 @@
   <img src="https://skillicons.dev/icons?i=github" height="40" alt="github logo"  />
 </div>
 
-
-
-
 ###
-
 
 ---
 
-##  Contributor
+# Contributor
 |PROFIL |NAMA | NIM |
 |-|-------|--------|
 | [<img src="https://avatars.githubusercontent.com/u/178456352?v=4" width="50"/>](https://github.com/FaizNation) |**Fadly Fais Fajarruddin** | 24111814015 |
 
 
 ---
+
+# Color Palette
+<strong> Primary Colors </strong>
+|Color|<img src="https://github.com/beeena4/elkoding/blob/main/color%20pallete/Rectangle%2079.png" width="60"/>|<img src="https://github.com/beeena4/elkoding/blob/main/color%20pallete/Rectangle%2080.png" width="60"/>| <img src="https://github.com/beeena4/elkoding/blob/main/color%20pallete/Rectangle%2081.png" width="60"/>|<img src="https://github.com/beeena4/elkoding/blob/main/color%20pallete/Rectangle%2082.png" width="60"/>|<img src="https://github.com/beeena4/elkoding/blob/main/color%20pallete/Rectangle%2083.png" width="60"/>|<img src="https://github.com/beeena4/elkoding/blob/main/color%20pallete/Rectangle%2084.png" width="60"/>|<img src="https://github.com/beeena4/elkoding/blob/main/color%20pallete/Rectangle%2085.png" width="60"/>|<img src="https://github.com/beeena4/elkoding/blob/main/color%20pallete/Rectangle%2086.png" width="60"/>| <img src="https://github.com/beeena4/elkoding/blob/main/color%20pallete/Rectangle%2087.png" width="60"/>|<img src="https://github.com/beeena4/elkoding/blob/main/color%20pallete/Rectangle%2088.png" width="60"/>|<img src="https://github.com/beeena4/elkoding/blob/main/color%20pallete/Rectangle%2077.png" width="60"/>|
+| --- | --- | --- | --- | --- | --- | --- | --- |--- | --- | --- |--- |
+| Shade |50|100|200|300|400|500|600|700|800|900|950|
+| Hex |`#eff6ff`|`#dbeafe`|`#bfdbfe`|`#93c5fd`|`#60a5fa`|`#3b82f6`|`#2563eb`|`#1d4ed8`|`#1e40af`|`#1e3a8a`|`#172554`|
+
 
