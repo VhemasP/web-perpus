@@ -58,12 +58,13 @@ OPENLIBRARY_API_BASE = "https://openlibrary.org/search.json"
 def clean_work_id(work_id):
     return work_id.replace('/works/', '')
 
-def fetch_books(query="subject:fiction", limit=20):
+def fetch_books(query="subject:fiction", limit=20, offset=0):
     """
     Fetch books from OpenLibrary API
     Args:
         query (str): Search query for books
-        limit (int): Number of books to fetch
+        limit (int): Number of books per page
+        offset (int): Number of books to skip
     Returns:
         list: List of Book objects
     """
@@ -71,7 +72,9 @@ def fetch_books(query="subject:fiction", limit=20):
         params = {
             'q': query,
             'limit': limit,
+            'offset': offset,
             'fields': 'key,title,author_name,first_publish_year,cover_i',
+            'sort': 'rating'  # Sort by rating to get more interesting books first
         }
         
         response = requests.get(
@@ -123,39 +126,76 @@ def index(request):
         
         # Modify query based on selected category
         if category and category != 'all':
-            all_books = fetch_books(query=f"subject:{category}", limit=books_per_page * page)
+            query = f"subject:{category}"
         else:
-            all_books = fetch_books(limit=books_per_page * page)
+            query = "subject:*"  # All books
             
-        # Check availability for each book
-        for book in all_books:
-            book.is_available = not Borrowing.objects.filter(
-                book_id=book.id,
-                status='borrowed'
-            ).exists()
+        # Calculate offset for the API
+        offset = (page - 1) * books_per_page
+            
+        # Fetch only the current page
+        response = requests.get(
+            OPENLIBRARY_API_BASE,
+            params={
+                'q': query,
+                'limit': books_per_page,
+                'offset': offset,
+                'fields': 'key,title,author_name,first_publish_year,cover_i',
+                'sort': 'rating'
+            },
+            timeout=10,
+            headers={'Accept': 'application/json'}
+        )
+        response.raise_for_status()
+        data = response.json()
         
-        # Calculate start and end indices for the current page
-        start_idx = (page - 1) * books_per_page
-        end_idx = start_idx + books_per_page
-        books = all_books[start_idx:end_idx]
+        books = []
+        if data.get('docs'):
+            for doc in data.get('docs', []):
+                work_id = clean_work_id(doc.get('key', ''))
+                book = Book(
+                    id=doc.get('key', '').split('/')[-1],
+                    title=doc.get('title', 'Unknown Title'),
+                    author=doc.get('author_name', ['Unknown Author'])[0] if doc.get('author_name') else 'Unknown Author',
+                    year=doc.get('first_publish_year', 0),
+                    cover_url=f"https://covers.openlibrary.org/b/id/{doc.get('cover_i', 0)}-L.jpg" if doc.get('cover_i') else None
+                )
+                book.is_available = not Borrowing.objects.filter(
+                    book_id=book.id,
+                    status='borrowed'
+                ).exists()
+                books.append(book)
+
+        total_results = data.get('numFound', 0)
+        shown_results = offset + len(books)
             
+        # For HTMX/AJAX requests, return only the book items
         if request.headers.get('HX-Request'):
-            # If it's an AJAX request, return only the book items
-            return render(request, 'books/book_items.html', {'books': books})
+            return render(request, 'books/book_items.html', {
+                'books': books,
+                'has_more': shown_results < total_results
+            })
             
         return render(request, 'books/index.html', {
             'books': books,
             'recently_viewed': recently_viewed.get_books(),
             'category_tree': CATEGORY_TREE.to_dict(),
-            'selected_category': category
+            'selected_category': category,
+            'total_results': total_results,
+            'shown_results': shown_results,
+            'has_more': shown_results < total_results
         })
     except Exception as e:
+        logger.error(f"Error in index view: {str(e)}")
         messages.error(request, f"Error fetching books: {str(e)}")
         return render(request, 'books/index.html', {
             'books': [], 
             'recently_viewed': [],
             'category_tree': CATEGORY_TREE.to_dict(),
-            'selected_category': 'all'
+            'selected_category': 'all',
+            'total_results': 0,
+            'shown_results': 0,
+            'has_more': False
         })
     
 def book_detail(request, book_id):

@@ -268,8 +268,16 @@
             </div>
         </div>
         {% endfor %}
-    </div>    <!-- Load More Button -->
-    <div id="loadMoreContainer" class="text-center mt-8 mb-4">
+    </div>    
+
+    <!-- Load More Section -->
+    {% if has_more %}
+    <div id="loadMoreInfo" class="text-center mt-4 text-sm text-gray-600 dark:text-gray-400">
+        {% if total_results > 0 %}
+            <span data-translate="showing">Showing</span> {{ shown_results }} <span data-translate="of">of</span> {{ total_results }} <span data-translate="books">books</span>
+        {% endif %}
+    </div>
+    <div id="loadMoreContainer" class="text-center mt-4 mb-4">
         <button id="loadMoreBtn" class="inline-flex items-center px-6 py-3 bg-white dark:bg-gray-800 text-primary-600 dark:text-primary-400 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
             <svg id="loadingSpinner" class="w-5 h-5 mr-2 animate-spin hidden" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -279,6 +287,7 @@
             <span id="loadingText" class="hidden" data-translate="loading">Loading...</span>
         </button>
     </div>
+    {% endif %}
 
     {% if recently_viewed %}
     <div class="mt-12 sm:mt-16">
@@ -326,95 +335,107 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Load More functionality
     const loadMoreBtn = document.getElementById('loadMoreBtn');
-    const bookGrid = document.querySelector('.grid');
-    const spinner = document.getElementById('loadingSpinner');
-    let page = 2; // Start from page 2 since first page is already loaded
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const loadMoreText = document.getElementById('loadMoreText');
+    const loadingText = document.getElementById('loadingText');
+    // Menggunakan selector yang lebih spesifik untuk grid buku utama
+    const bookGrid = document.querySelector('.grid.grid-cols-2.xs\\:grid-cols-2.sm\\:grid-cols-3.md\\:grid-cols-4.xl\\:grid-cols-5');
+    const loadMoreContainer = document.getElementById('loadMoreContainer');
+    const loadMoreInfo = document.getElementById('loadMoreInfo');
+    let isLoading = false;
+    let page = 2;
 
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', async function() {
-            // Show loading spinner
-            spinner.classList.remove('hidden');
+    async function loadMoreBooks() {
+        if (isLoading || !loadMoreBtn || !bookGrid) return;
+        
+        try {
+            isLoading = true;
+            loadingSpinner.classList.remove('hidden');
+            loadMoreText.classList.add('hidden');
+            loadingText.classList.remove('hidden');
             loadMoreBtn.disabled = true;
 
-            try {
-                // Build the URL with current category and search parameters
-                let url = `{% url 'books:index' %}?page=${page}`;
-                const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.has('category')) {
-                    url += `&category=${urlParams.get('category')}`;
-                }
-                if (urlParams.has('q')) {
-                    url += `&q=${urlParams.get('q')}`;
-                }
-
-                // Fetch more books
-                const response = await fetch(url);
-                const html = await response.text();
-                  // Create a temporary element to parse the HTML
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                
-                // Get only the book items, not the entire page
-                const bookItems = Array.from(doc.querySelectorAll('.group.bg-white'));
-                
-                // If no more books, hide the button
-                if (bookItems.length === 0) {
-                    loadMoreBtn.style.display = 'none';
-                    return;
-                }
-
-                // Add the new books to the grid
-                bookItems.forEach(book => {
-                    bookGrid.appendChild(book.cloneNode(true));
-                });
-
-                // Increment page number
-                page++;
-                
-            } catch (error) {
-                console.error('Error loading more books:', error);
-            } finally {
-                // Hide loading spinner and enable button
-                spinner.classList.add('hidden');
-                loadMoreBtn.disabled = false;
+            const urlParams = new URLSearchParams(window.location.search);
+            let url = `{% url 'books:index' %}?page=${page}`;
+            
+            if (urlParams.has('category')) {
+                url += `&category=${urlParams.get('category')}`;
             }
-        });
+            if (urlParams.has('q')) {
+                url += `&q=${urlParams.get('q')}`;
+            }
+
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Network response was not ok');
+            
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            
+            // Menggunakan selector yang sama dengan grid buku utama
+            const tempGrid = doc.querySelector('.grid.grid-cols-2.xs\\:grid-cols-2.sm\\:grid-cols-3.md\\:grid-cols-4.xl\\:grid-cols-5');
+            if (!tempGrid) {
+                loadMoreContainer.style.display = 'none';
+                return;
+            }
+
+            // Mengambil hanya elemen buku (tidak termasuk pesan "no books found")
+            const newBooks = Array.from(tempGrid.children).filter(book => 
+                book.classList.contains('group') && 
+                !book.classList.contains('col-span-full')
+            );
+            
+            if (newBooks.length === 0) {
+                loadMoreContainer.style.display = 'none';
+                return;
+            }
+
+            // Menambahkan buku baru ke grid
+            newBooks.forEach(book => {
+                const clone = book.cloneNode(true);
+                // Memastikan semua event listener dan fungsi bekerja dengan benar
+                const links = clone.querySelectorAll('a');
+                links.forEach(link => {
+                    if (link.href.includes('books:detail')) {
+                        const originalHref = link.getAttribute('href');
+                        link.href = originalHref;
+                    }
+                });
+                bookGrid.appendChild(clone);
+            });
+
+            // Update pagination info
+            const newInfo = doc.getElementById('loadMoreInfo');
+            if (newInfo && loadMoreInfo) {
+                loadMoreInfo.innerHTML = newInfo.innerHTML;
+            }
+
+            // Check if there are more pages
+            const newContainer = doc.getElementById('loadMoreContainer');
+            if (!newContainer) {
+                loadMoreContainer.style.display = 'none';
+            }
+
+            page++;
+
+        } catch (error) {
+            console.error('Error loading more books:', error);
+            loadMoreText.textContent = 'Error loading books. Try again.';
+            setTimeout(() => {
+                loadMoreText.textContent = 'Load More';
+            }, 3000);
+        } finally {
+            isLoading = false;
+            loadingSpinner.classList.add('hidden');
+            loadMoreText.classList.remove('hidden');
+            loadingText.classList.add('hidden');
+            loadMoreBtn.disabled = false;
+        }
     }
 
-    // Handle category tree interactions
-    const categoryToggles = document.querySelectorAll('.category-toggle');
-    categoryToggles.forEach(toggle => {
-        toggle.addEventListener('click', function(e) {
-            // Only prevent default if clicking the button itself, not the link
-            if (e.target.tagName !== 'A') {
-                e.preventDefault();
-                const categoryId = this.dataset.categoryId;
-                const submenu = this.closest('.category-item').querySelector(`[data-parent="${categoryId}"]`);
-                const icon = this.querySelector('svg');
-                
-                if (submenu) {
-                    submenu.classList.toggle('hidden');
-                    icon.classList.toggle('rotate-90');
-                }
-            }
-        });
-    });
-
-    // Find the current category and expand its parents
-    const selectedCategory = document.querySelector('.text-primary-600')?.closest('.category-item');
-    if (selectedCategory) {
-        let parent = selectedCategory.closest('[data-parent]');
-        while (parent) {
-            parent.classList.remove('hidden');
-            const parentButton = document.querySelector(`[data-category-id="${parent.dataset.parent}"]`);
-            if (parentButton) {
-                const icon = parentButton.querySelector('svg');
-                icon.classList.add('rotate-90');
-            }
-            parent = parent.closest('.category-item').querySelector('[data-parent]');
-        }
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', loadMoreBooks);
     }
 });
 </script>
