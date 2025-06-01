@@ -47,6 +47,7 @@
 |-|-------|--------|
 | [<img src="https://avatars.githubusercontent.com/u/178456352?v=4" width="50"/>](https://github.com/FaizNation) |**Fadly Fais Fajarruddin** | 24111814015 |
 | [<img src="https://avatars.githubusercontent.com/u/207877704?v=4" width="50"/>](https://github.com/mandaazaziah) |**Manda Fatimah Azaziah** | 24111814044 |
+| [<img src="https://avatars.githubusercontent.com/u/184195871?v=4" width="50"/>](https://github.com/Farouq-beginner) |**Farouq Gusmo Abdilah** | 24111814081 |
 
 
 
